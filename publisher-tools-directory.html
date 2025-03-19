@@ -236,117 +236,252 @@
     <script>
         // Tool data from the CSV
         const toolsData = [
-            {
-                name: "Mibl Art",
-                url: "https://miblart.com/blog/marketing-plan-for-indie-author/",
-                description: "Professional cover design services for indie authors.",
-                goalType: "Manuscript Development",
-                projectStage: "Polishing",
-                costType: "Paid One Time",
-                purpose: "Cover Design",
-                toolType: "Website"
-            },
-            {
-                name: "Ingram Spark",
-                url: "https://www.ingramspark.com/features",
-                description: "Print-on-demand and global distribution services for independent publishers.",
-                goalType: "Distribution/Sales Growth",
-                projectStage: "Review with Readers,Polishing",
-                costType: "Paid One Time,Royalties/Profit Sharing",
-                purpose: "Distribution",
-                toolType: "Website"
-            },
-            {
-                name: "Net Gallery",
-                url: "https://www.netgalley.com/auth/register",
-                description: "Publishers and authors make digital review copies and audiobooks available for the NetGalley community, and in exchange, members provide reviews, star ratings, industry list nominations, and more.",
-                goalType: "Distribution/Sales Growth",
-                projectStage: "Review with Readers,Polishing",
-                costType: "Paid One Time,Paid Subscription",
-                purpose: "Beta Reading,Community Building",
-                toolType: "Website"
-            },
-            {
-                name: "Publishers Weekly",
-                url: "https://www.publishersweekly.com/pw/nielsen/index.html",
-                description: "Publishers Weekly, now celebrating its 150th anniversary, is familiarly known in the book world as PW and 'the bible of the book business.' Focused on the international book publishing business, it is now a multimedia news platform with full horizontal coverage of book publishing beginning with the author-as-creator to publisher, printer, and distributor to the end consumer.",
-                goalType: "Professional Development",
-                projectStage: "Concept Testing",
-                costType: "Freemium",
-                purpose: "Agent Research,Professional Development,Publisher Research,Market Research,Comp Title Research",
-                toolType: "Website"
-            },
-            {
-                name: "The Story Graph",
-                url: "https://app.thestorygraph.com/browse",
-                description: "A fully-featured Amazon-free alternative to Goodreads. We'll help you track your reading and choose your next book based on your mood and your favorite topics and themes.",
-                goalType: "Platform Building",
-                projectStage: "Review with Readers",
-                costType: "Free,Freemium",
-                purpose: "Community Building,Genre Research,Comp Title Research,Market Research",
-                toolType: "Mobile App,Website"
-            },
-            {
-                name: "USA Today Booklist",
-                url: "https://www.usatoday.com/booklist/aboutthelist",
-                description: "Our goal remains to provide book lovers with the best weekly snapshot of which books are selling (and people are hopefully reading): one list, regardless of genre and format, of what's selling broadly across the US.",
-                goalType: "Distribution/Sales Growth",
-                projectStage: "Concept Testing,Polishing",
-                costType: "Free",
-                purpose: "Market Research,Comp Title Research",
-                toolType: "Website"
-            },
-            {
-                name: "Draft 2 Digital",
-                url: "https://www.draft2digital.com/blog/everything-you-need-to-know-about-indie-author-marketing/",
-                description: "We are Self-Publishing with Support.",
-                goalType: "Distribution/Sales Growth",
-                projectStage: "Light Editing,Polishing,Publishing",
-                costType: "Royalties/Profit Sharing",
-                purpose: "Manuscript Formatting,Distribution",
-                toolType: "Website"
-            },
-            {
-                name: "Bookbub",
-                url: "https://insights.bookbub.com/how-bookbub-selection-process-works/",
-                description: "BookBub is a free service that helps millions of readers discover books they'll love while providing publishers and authors with a way to drive sales and find new fans. Upon joining, members receive unbeatable deals selected by our expert editorial team, handpicked recommendations from people they trust, and real-time updates from their favorite authors. BookBub works with all major ebook retailers and devices, and partners with thousands of the industry's leading publishers and authors to promote their books.",
-                goalType: "Distribution/Sales Growth",
-                projectStage: "Polishing,Publishing",
-                costType: "Royalties/Profit Sharing",
-                purpose: "Comp Title Research,Market Research,Social Media Platform",
-                toolType: "Website"
-            },
-            {
-                name: "Plottr",
-                url: "https://plottr.com/",
-                description: "Outline faster, organize smarter, and turbocharge your productivity today with the #1 visual book planning and story bible software.",
-                goalType: "Manuscript Development",
-                projectStage: "Early Draft,Heavy Editing,Revising",
-                costType: "Paid Subscription",
-                purpose: "Outlining Tools",
-                toolType: "Website,Software"
-            },
-            {
-                name: "Atticus",
-                url: "https://www.atticus.io/",
-                description: "Create professional print books and eBooks easily with the all-in-one book writing software.",
-                goalType: "Manuscript Development",
-                projectStage: "Polishing,Early Draft",
-                costType: "Paid One Time",
-                purpose: "Manuscript Formatting",
-                toolType: "Software"
-            },
-            {
-                name: "Story Origin App",
-                url: "https://storyoriginapp.com/",
-                description: "StoryOrigin is a cross-promotional marketing tool for authors - designed to help authors work together to build their email lists, increase book sales/page reads, and get more reviews.",
-                goalType: "Platform Building",
-                projectStage: "Early Draft,Review with Readers",
-                costType: "Freemium",
-                purpose: "Newsletter Building,Beta Reading,Final Reviews,Community Building",
-                toolType: "Website,Mobile App"
-            }
-            // More tools will be added from your full spreadsheet
+// Reformatted and extended tools data
+const toolsData = [
+    // Reformatted existing tools
+    {
+        name: "Mibl Art",
+        url: "https://miblart.com/blog/marketing-plan-for-indie-author/",
+        description: "Professional cover design services for indie authors.",
+        publishingStage: ["Polishing"],
+        costType: "Paid One-Time",
+        primaryFunction: "Cover Design",
+        secondaryFunctions: [],
+        toolType: "Website"
+    },
+    {
+        name: "Ingram Spark",
+        url: "https://www.ingramspark.com/features",
+        description: "Print-on-demand and global distribution services for independent publishers.",
+        publishingStage: ["Publishing", "Distribution"],
+        costType: "Paid One-Time + Royalties",
+        primaryFunction: "Distribution",
+        secondaryFunctions: ["Print-on-Demand", "Global Reach"],
+        toolType: "Website"
+    },
+    {
+        name: "NetGalley",
+        url: "https://www.netgalley.com/auth/register",
+        description: "Platform where publishers and authors share digital review copies with a community of reviewers, bloggers, and media professionals.",
+        publishingStage: ["Review", "Marketing"],
+        costType: "Paid Subscription",
+        primaryFunction: "Advanced Reader Copies",
+        secondaryFunctions: ["Professional Reviews", "Community Building"],
+        toolType: "Website"
+    },
+    {
+        name: "Publishers Weekly",
+        url: "https://www.publishersweekly.com/pw/nielsen/index.html",
+        description: "Industry news platform covering the book publishing business from author to reader, offering market insights and industry trends.",
+        publishingStage: ["Research", "Market Analysis"],
+        costType: "Freemium",
+        primaryFunction: "Market Research",
+        secondaryFunctions: ["Agent Research", "Publisher Research", "Comp Title Research", "Professional Development"],
+        toolType: "Website"
+    },
+    {
+        name: "The Story Graph",
+        url: "https://app.thestorygraph.com/browse",
+        description: "Amazon-free alternative to Goodreads to track reading and discover books based on mood and preferred topics.",
+        publishingStage: ["Research", "Marketing"],
+        costType: "Free + Premium Options",
+        primaryFunction: "Reader Community",
+        secondaryFunctions: ["Genre Research", "Comp Title Research", "Market Research"],
+        toolType: "Website + Mobile App"
+    },
+    {
+        name: "USA Today Booklist",
+        url: "https://www.usatoday.com/booklist/aboutthelist",
+        description: "Weekly bestseller list showing which books are selling across the US, regardless of genre and format.",
+        publishingStage: ["Research", "Market Analysis"],
+        costType: "Free",
+        primaryFunction: "Market Research",
+        secondaryFunctions: ["Comp Title Research", "Bestseller Tracking"],
+        toolType: "Website"
+    },
+    {
+        name: "Draft2Digital",
+        url: "https://www.draft2digital.com/blog/everything-you-need-to-know-about-indie-author-marketing/",
+        description: "Self-publishing platform offering formatting, distribution, and marketing support for indie authors.",
+        publishingStage: ["Formatting", "Publishing", "Distribution"],
+        costType: "Royalty Share",
+        primaryFunction: "Distribution",
+        secondaryFunctions: ["Manuscript Formatting", "Marketing Support", "Print-on-Demand"],
+        toolType: "Website"
+    },
+    {
+        name: "BookBub",
+        url: "https://insights.bookbub.com/how-bookbub-selection-process-works/",
+        description: "Promotional service helping readers discover books while providing authors a platform to drive sales and find new fans.",
+        publishingStage: ["Marketing", "Promotion"],
+        costType: "Freemium",
+        primaryFunction: "Book Promotion",
+        secondaryFunctions: ["Comp Title Research", "Market Research", "Reader Community"],
+        toolType: "Website"
+    },
+    {
+        name: "Plottr",
+        url: "https://plottr.com/",
+        description: "Visual book planning software for outlining stories and maintaining story bibles to increase productivity.",
+        publishingStage: ["Planning", "Drafting", "Revising"],
+        costType: "Paid Subscription",
+        primaryFunction: "Outlining",
+        secondaryFunctions: ["Character Development", "Story Bible", "Timeline Management"],
+        toolType: "Software"
+    },
+    {
+        name: "Atticus",
+        url: "https://www.atticus.io/",
+        description: "All-in-one writing and formatting software for creating professional print books and eBooks.",
+        publishingStage: ["Writing", "Formatting", "Publishing"],
+        costType: "Paid One-Time",
+        primaryFunction: "Manuscript Formatting",
+        secondaryFunctions: ["Writing Software", "eBook Creation", "Print Book Formatting"],
+        toolType: "Software"
+    },
+    {
+        name: "StoryOrigin",
+        url: "https://storyoriginapp.com/",
+        description: "Cross-promotional marketing tool for authors to build email lists, increase sales, and get more reviews.",
+        publishingStage: ["Marketing", "Review Collection"],
+        costType: "Freemium",
+        primaryFunction: "Newsletter Building",
+        secondaryFunctions: ["Beta Reading", "Review Collection", "Cross Promotion"],
+        toolType: "Website + Mobile App"
+    },
+    
+    // Additional tools from spreadsheet
+    {
+        name: "Newsletter Ninja",
+        url: "https://newsletterninja.net/about/",
+        description: "Courses, membership, and done-for-you author newsletter services to help authors build and maintain effective newsletters.",
+        publishingStage: ["Marketing", "Platform Building"],
+        costType: "Paid One-Time",
+        primaryFunction: "Newsletter Building",
+        secondaryFunctions: ["Author Education", "Marketing Strategy"],
+        toolType: "Website"
+    },
+    {
+        name: "Publisher Rocket",
+        url: "https://publisherrocket.com/",
+        description: "Software tool for authors to optimize their book listings and perform market research on Amazon.",
+        publishingStage: ["Research", "Publishing", "Marketing"],
+        costType: "Paid One-Time",
+        primaryFunction: "Amazon Optimization",
+        secondaryFunctions: ["Keyword Research", "Category Research", "Competitor Analysis"],
+        toolType: "Software"
+    },
+    {
+        name: "Kindlepreneur",
+        url: "https://kindlepreneur.com/about/",
+        description: "Blog and resource site providing marketing strategies and tools for self-published authors.",
+        publishingStage: ["Research", "Marketing", "Publishing"],
+        costType: "Free",
+        primaryFunction: "Author Education",
+        secondaryFunctions: ["Industry News", "Marketing Strategy", "Tool Reviews"],
+        toolType: "Website"
+    },
+    {
+        name: "Written Word Media",
+        url: "https://www.writtenwordmedia.com/",
+        description: "Book promotion service with multiple reader-facing brands targeting different reader demographics.",
+        publishingStage: ["Marketing", "Promotion"],
+        costType: "Freemium",
+        primaryFunction: "Book Promotion",
+        secondaryFunctions: ["Email Marketing", "Reader Targeting", "Community Building"],
+        toolType: "Website"
+    },
+    {
+        name: "Author Marketing Experts",
+        url: "https://amarketingexpert.com/author-marketing-experts-reviews/",
+        description: "Book promotion company offering marketing services and strategies specifically designed for authors.",
+        publishingStage: ["Marketing", "Promotion"],
+        costType: "Paid One-Time",
+        primaryFunction: "Marketing Strategy",
+        secondaryFunctions: ["Market Research", "Book Promotion", "Media Relations"],
+        toolType: "Service"
+    },
+    {
+        name: "Freebooksy",
+        url: "https://www.freebooksy.com/for-the-authors/",
+        description: "Promotional service for free books to boost downloads and visibility with voracious readers.",
+        publishingStage: ["Marketing", "Promotion"],
+        costType: "Paid Per Campaign",
+        primaryFunction: "Book Promotion",
+        secondaryFunctions: ["Reader Acquisition", "Free Book Marketing"],
+        toolType: "Website"
+    },
+    {
+        name: "Litsy",
+        url: "https://www.litsy.com/web/home",
+        description: "Social platform for readers to share and discover books, with features for quotes, reviews, and recommendations.",
+        publishingStage: ["Marketing", "Community Building"],
+        costType: "Free",
+        primaryFunction: "Reader Community",
+        secondaryFunctions: ["Book Discovery", "Reader Engagement", "Social Media"],
+        toolType: "Mobile App + Website"
+    },
+    {
+        name: "Goodreads",
+        url: "https://www.goodreads.com/",
+        description: "World's largest site for readers and book recommendations, offering a platform for authors to connect with readers.",
+        publishingStage: ["Marketing", "Reader Engagement"],
+        costType: "Free",
+        primaryFunction: "Reader Community",
+        secondaryFunctions: ["Book Reviews", "Author Platform", "Book Discovery"],
+        toolType: "Website + Mobile App"
+    },
+    {
+        name: "Scribophile",
+        url: "https://www.scribophile.com/",
+        description: "Online writing group and community for writers to give and receive feedback on their work.",
+        publishingStage: ["Drafting", "Editing", "Feedback"],
+        costType: "Free + Premium",
+        primaryFunction: "Critique Partners",
+        secondaryFunctions: ["Beta Reading", "Community Building", "Professional Development"],
+        toolType: "Website"
+    },
+    {
+        name: "Reedsy Discovery",
+        url: "https://reedsy.com/discovery/submit",
+        description: "Platform connecting indie authors with readers and reviewers who can help promote new books.",
+        publishingStage: ["Marketing", "Reviews"],
+        costType: "Paid Per Submission",
+        primaryFunction: "Book Discovery",
+        secondaryFunctions: ["Reviews", "Reader Acquisition"],
+        toolType: "Website"
+    },
+    {
+        name: "Gumroad",
+        url: "https://gumroad.com/",
+        description: "Platform for creators to sell digital products directly to their audience, including ebooks and courses.",
+        publishingStage: ["Distribution", "Sales", "Direct Marketing"],
+        costType: "Free + Commission",
+        primaryFunction: "Direct Sales",
+        secondaryFunctions: ["Email Marketing", "Product Hosting", "Payment Processing"],
+        toolType: "Website"
+    },
+    {
+        name: "The Write Practice",
+        url: "https://thewritepractice.com/",
+        description: "Writing community and resource site offering articles, courses, and contests to help authors improve their craft.",
+        publishingStage: ["Writing", "Skill Development"],
+        costType: "Free + Paid Courses",
+        primaryFunction: "Writing Craft",
+        secondaryFunctions: ["Community Building", "Writing Contests", "Author Education"],
+        toolType: "Website"
+    },
+    {
+        name: "Story Grid",
+        url: "https://storygrid.com/",
+        description: "Methodology and resources for writers to analyze and improve story structure and editing.",
+        publishingStage: ["Planning", "Editing", "Revising"],
+        costType: "Free Resources + Paid Services",
+        primaryFunction: "Story Structure",
+        secondaryFunctions: ["Editing Methodology", "Genre Analysis", "Writer Education"],
+        toolType: "Website + Books + Courses"
+    }
+    // More tools can be added here...
         ];
         
         // Function to initialize the app
