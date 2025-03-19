@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiction Publisher's Toolbox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #7db9b6;
+            --light-color: #e8f1f2;
+            --dark-color: #333333;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .filter-group select, .search-bar input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .search-bar {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tool-card {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .tool-card-header {
+            padding: 1rem;
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .tool-card-body {
+            padding: 1rem;
+        }
+        
+        .tool-card-footer {
+            padding: 1rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .tag {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: 2rem;
+        }
+        
+        .description {
+            margin-bottom: 1rem;
+            max-height: 80px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .description.expanded {
+            max-height: none;
+        }
+        
+        .description::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(transparent, white);
+        }
+        
+        .description.expanded::after {
+            display: none;
+        }
+        
+        .read-more {
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-group, .search-bar {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Fiction Publisher's Toolbox</h1>
+        <p>Discover the best tools for independent fiction publishers</p>
+    </header>
+    
+    <div class="container">
+        <div class="filters">
+            <div class="search-bar">
+                <label for="search">Search Tools</label>
+                <input type="text" id="search" placeholder="Search by name or description...">
+            </div>
+            <div class="filter-group">
+                <label for="function-filter">Primary Function</label>
+                <select id="function-filter">
+                    <option value="">All Functions</option>
+                    <!-- Will be populated via JavaScript -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="stage-filter">Project Stage</label>
+                <select id="stage-filter">
+                    <option value="">All Stages</option>
+                    <!-- Will be populated via JavaScript -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="cost-filter">Cost Type</label>
+                <select id="cost-filter">
+                    <option value="">All Cost Types</option>
+                    <!-- Will be populated via JavaScript -->
+                </select>
+            </div>
+        </div>
+        
+        <div class="tools-grid" id="tools-container">
+            <!-- Tool cards will be populated here via JavaScript -->
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Fiction Publisher's Toolbox</p>
+    </footer>
+    
+    <script>
+        // Tool data
+        const toolsData = [
+            // Reformatted existing tools
+            {
+                name: "Mibl Art",
+                url: "https://miblart.com/blog/marketing-plan-for-indie-author/",
+                description: "Professional cover design services for indie authors.",
+                publishingStage: ["Polishing"],
+                costType: "Paid One-Time",
+                primaryFunction: "Cover Design",
+                secondaryFunctions: [],
+                toolType: "Website"
+            },
+            {
+                name: "Ingram Spark",
+                url: "https://www.ingramspark.com/features",
+                description: "Print-on-demand and global distribution services for independent publishers.",
+                publishingStage: ["Publishing", "Distribution"],
+                costType: "Paid One-Time + Royalties",
+                primaryFunction: "Distribution",
+                secondaryFunctions: ["Print-on-Demand", "Global Reach"],
+                toolType: "Website"
+            },
+            {
+                name: "NetGalley",
+                url: "https://www.netgalley.com/auth/register",
+                description: "Platform where publishers and authors share digital review copies with a community of reviewers, bloggers, and media professionals.",
+                publishingStage: ["Review", "Marketing"],
+                costType: "Paid Subscription",
+                primaryFunction: "Advanced Reader Copies",
+                secondaryFunctions: ["Professional Reviews", "Community Building"],
+                toolType: "Website"
+            },
+            {
+                name: "Publishers Weekly",
+                url: "https://www.publishersweekly.com/pw/nielsen/index.html",
+                description: "Industry news platform covering the book publishing business from author to reader, offering market insights and industry trends.",
+                publishingStage: ["Research", "Market Analysis"],
+                costType: "Freemium",
+                primaryFunction: "Market Research",
+                secondaryFunctions: ["Agent Research", "Publisher Research", "Comp Title Research", "Professional Development"],
+                toolType: "Website"
+            },
+            {
+                name: "The Story Graph",
+                url: "https://app.thestorygraph.com/browse",
+                description: "Amazon-free alternative to Goodreads to track reading and discover books based on mood and preferred topics.",
+                publishingStage: ["Research", "Marketing"],
+                costType: "Free + Premium Options",
+                primaryFunction: "Reader Community",
+                secondaryFunctions: ["Genre Research", "Comp Title Research", "Market Research"],
+                toolType: "Website + Mobile App"
+            },
+            {
+                name: "USA Today Booklist",
+                url: "https://www.usatoday.com/booklist/aboutthelist",
+                description: "Weekly bestseller list showing which books are selling across the US, regardless of genre and format.",
+                publishingStage: ["Research", "Market Analysis"],
+                costType: "Free",
+                primaryFunction: "Market Research",
+                secondaryFunctions: ["Comp Title Research", "Bestseller Tracking"],
+                toolType: "Website"
+            },
+            {
+                name: "Draft2Digital",
+                url: "https://www.draft2digital.com/blog/everything-you-need-to-know-about-indie-author-marketing/",
+                description: "Self-publishing platform offering formatting, distribution, and marketing support for indie authors.",
+                publishingStage: ["Formatting", "Publishing", "Distribution"],
+                costType: "Royalty Share",
+                primaryFunction: "Distribution",
+                secondaryFunctions: ["Manuscript Formatting", "Marketing Support", "Print-on-Demand"],
+                toolType: "Website"
+            },
+            {
+                name: "BookBub",
+                url: "https://insights.bookbub.com/how-bookbub-selection-process-works/",
+                description: "Promotional service helping readers discover books while providing authors a platform to drive sales and find new fans.",
+                publishingStage: ["Marketing", "Promotion"],
+                costType: "Freemium",
+                primaryFunction: "Book Promotion",
+                secondaryFunctions: ["Comp Title Research", "Market Research", "Reader Community"],
+                toolType: "Website"
+            },
+            {
+                name: "Plottr",
+                url: "https://plottr.com/",
+                description: "Visual book planning software for outlining stories and maintaining story bibles to increase productivity.",
+                publishingStage: ["Planning", "Drafting", "Revising"],
+                costType: "Paid Subscription",
+                primaryFunction: "Outlining",
+                secondaryFunctions: ["Character Development", "Story Bible", "Timeline Management"],
+                toolType: "Software"
+            },
+            {
+                name: "Atticus",
+                url: "https://www.atticus.io/",
+                description: "All-in-one writing and formatting software for creating professional print books and eBooks.",
+                publishingStage: ["Writing", "Formatting", "Publishing"],
+                costType: "Paid One-Time",
+                primaryFunction: "Manuscript Formatting",
+                secondaryFunctions: ["Writing Software", "eBook Creation", "Print Book Formatting"],
+                toolType: "Software"
+            },
+            {
+                name: "StoryOrigin",
+                url: "https://storyoriginapp.com/",
+                description: "Cross-promotional marketing tool for authors to build email lists, increase sales, and get more reviews.",
+                publishingStage: ["Marketing", "Review Collection"],
+                costType: "Freemium",
+                primaryFunction: "Newsletter Building",
+                secondaryFunctions: ["Beta Reading", "Review Collection", "Cross Promotion"],
+                toolType: "Website + Mobile App"
+            },
+            
+            // Additional tools from spreadsheet
+            {
+                name: "Newsletter Ninja",
+                url: "https://newsletterninja.net/about/",
+                description: "Courses, membership, and done-for-you author newsletter services to help authors build and maintain effective newsletters.",
+                publishingStage: ["Marketing", "Platform Building"],
+                costType: "Paid One-Time",
+                primaryFunction: "Newsletter Building",
+                secondaryFunctions: ["Author Education", "Marketing Strategy"],
+                toolType: "Website"
+            },
+            {
+                name: "Publisher Rocket",
+                url: "https://publisherrocket.com/",
+                description: "Software tool for authors to optimize their book listings and perform market research on Amazon.",
+                publishingStage: ["Research", "Publishing", "Marketing"],
+                costType: "Paid One-Time",
+                primaryFunction: "Amazon Optimization",
+                secondaryFunctions: ["Keyword Research", "Category Research", "Competitor Analysis"],
+                toolType: "Software"
+            },
+            {
+                name: "Kindlepreneur",
+                url: "https://kindlepreneur.com/about/",
+                description: "Blog and resource site providing marketing strategies and tools for self-published authors.",
+                publishingStage: ["Research", "Marketing", "Publishing"],
+                costType: "Free",
+                primaryFunction: "Author Education",
+                secondaryFunctions: ["Industry News", "Marketing Strategy", "Tool Reviews"],
+                toolType: "Website"
+            },
+            {
+                name: "Written Word Media",
+                url: "https://www.writtenwordmedia.com/",
+                description: "Book promotion service with multiple reader-facing brands targeting different reader demographics.",
+                publishingStage: ["Marketing", "Promotion"],
+                costType: "Freemium",
+                primaryFunction: "Book Promotion",
+                secondaryFunctions: ["Email Marketing", "Reader Targeting", "Community Building"],
+                toolType: "Website"
+            },
+            {
+                name: "Author Marketing Experts",
+                url: "https://amarketingexpert.com/author-marketing-experts-reviews/",
+                description: "Book promotion company offering marketing services and strategies specifically designed for authors.",
+                publishingStage: ["Marketing", "Promotion"],
+                costType: "Paid One-Time",
+                primaryFunction: "Marketing Strategy",
+                secondaryFunctions: ["Market Research", "Book Promotion", "Media Relations"],
+                toolType: "Service"
+            },
+            {
+                name: "Freebooksy",
+                url: "https://www.freebooksy.com/for-the-authors/",
+                description: "Promotional service for free books to boost downloads and visibility with voracious readers.",
+                publishingStage: ["Marketing", "Promotion"],
+                costType: "Paid Per Campaign",
+                primaryFunction: "Book Promotion",
+                secondaryFunctions: ["Reader Acquisition", "Free Book Marketing"],
+                toolType: "Website"
+            },
+            {
+                name: "Litsy",
+                url: "https://www.litsy.com/web/home",
+                description: "Social platform for readers to share and discover books, with features for quotes, reviews, and recommendations.",
+                publishingStage: ["Marketing", "Community Building"],
+                costType: "Free",
+                primaryFunction: "Reader Community",
+                secondaryFunctions: ["Book Discovery", "Reader Engagement", "Social Media"],
+                toolType: "Mobile App + Website"
+            },
+            {
+                name: "Goodreads",
+                url: "https://www.goodreads.com/",
+                description: "World's largest site for readers and book recommendations, offering a platform for authors to connect with readers.",
+                publishingStage: ["Marketing", "Reader Engagement"],
+                costType: "Free",
+                primaryFunction: "Reader Community",
+                secondaryFunctions: ["Book Reviews", "Author Platform", "Book Discovery"],
+                toolType: "Website + Mobile App"
+            },
+            {
+                name: "Scribophile",
+                url: "https://www.scribophile.com/",
+                description: "Online writing group and community for writers to give and receive feedback on their work.",
+                publishingStage: ["Drafting", "Editing", "Feedback"],
+                costType: "Free + Premium",
+                primaryFunction: "Critique Partners",
+                secondaryFunctions: ["Beta Reading", "Community Building", "Professional Development"],
+                toolType: "Website"
+            },
+            {
+                name: "Reedsy Discovery",
+                url: "https://reedsy.com/discovery/submit",
+                description: "Platform connecting indie authors with readers and reviewers who can help promote new books.",
+                publishingStage: ["Marketing", "Reviews"],
+                costType: "Paid Per Submission",
+                primaryFunction: "Book Discovery",
+                secondaryFunctions: ["Reviews", "Reader Acquisition"],
+                toolType: "Website"
+            },
+            {
+                name: "Gumroad",
+                url: "https://gumroad.com/",
+                description: "Platform for creators to sell digital products directly to their audience, including ebooks and courses.",
+                publishingStage: ["Distribution", "Sales", "Direct Marketing"],
+                costType: "Free + Commission",
+                primaryFunction: "Direct Sales",
+                secondaryFunctions: ["Email Marketing", "Product Hosting", "Payment Processing"],
+                toolType: "Website"
+            },
+            {
+                name: "The Write Practice",
+                url: "https://thewritepractice.com/",
+                description: "Writing community and resource site offering articles, courses, and contests to help authors improve their craft.",
+                publishingStage: ["Writing", "Skill Development"],
+                costType: "Free + Paid Courses",
+                primaryFunction: "Writing Craft",
+                secondaryFunctions: ["Community Building", "Writing Contests", "Author Education"],
+                toolType: "Website"
+            },
+            {
+                name: "Story Grid",
+                url: "https://storygrid.com/",
+                description: "Methodology and resources for writers to analyze and improve story structure and editing.",
+                publishingStage: ["Planning", "Editing", "Revising"],
+                costType: "Free Resources + Paid Services",
+                primaryFunction: "Story Structure",
+                secondaryFunctions: ["Editing Methodology", "Genre Analysis", "Writer Education"],
+                toolType: "Website + Books + Courses"
+            }
+        ];
+        
+        // Function to initialize the app
+        function init() {
+            populateFilters();
+            renderTools(toolsData);
+            setupEventListeners();
+        }
+        
+        // Function to populate filter dropdowns
+        function populateFilters() {
+            const functions = new Set();
+            const stages = new Set();
+            const costTypes = new Set();
+            
+            toolsData.forEach(tool => {
+                if (tool.primaryFunction) {
+                    functions.add(tool.primaryFunction);
+                }
+                
+                if (tool.publishingStage && Array.isArray(tool.publishingStage)) {
+                    tool.publishingStage.forEach(stage => stages.add(stage));
+                }
+                
+                if (tool.costType) {
+                    costTypes.add(tool.costType);
+                }
+            });
+            
+            const functionFilter = document.getElementById('function-filter');
+            const stageFilter = document.getElementById('stage-filter');
+            const costFilter = document.getElementById('cost-filter');
+            
+            [...functions].sort().forEach(func => {
+                const option = document.createElement('option');
+                option.value = func;
+                option.textContent = func;
+                functionFilter.appendChild(option);
+            });
+            
+            [...stages].sort().forEach(stage => {
+                const option = document.createElement('option');
+                option.value = stage;
+                option.textContent = stage;
+                stageFilter.appendChild(option);
+            });
+            
+            [...costTypes].sort().forEach(cost => {
+                const option = document.createElement('option');
+                option.value = cost;
+                option.textContent = cost;
+                costFilter.appendChild(option);
+            });
+        }
+        
+        // Function to render tool cards
+        function renderTools(tools) {
+            const container = document.getElementById('tools-container');
+            container.innerHTML = '';
+            
+            if (tools.length === 0) {
+                container.innerHTML = '<p>No tools match your filters. Try adjusting your criteria.</p>';
+                return;
+            }
+            
+            tools.forEach(tool => {
+                const card = document.createElement('div');
+                card.className = 'tool-card';
+                
+                // Create tags for primary function
+                let functionTag = '';
+                if (tool.primaryFunction) {
+                    functionTag = `<span class="tag">${tool.primaryFunction}</span>`;
+                }
+                
+                // Create tags for secondary functions if they exist
+                let secondaryTags = '';
+                if (tool.secondaryFunctions && Array.isArray(tool.secondaryFunctions)) {
+                    secondaryTags = tool.secondaryFunctions
+                        .map(func => `<span class="tag">${func}</span>`)
+                        .join('');
+                }
+                
+                card.innerHTML = `
+                    <div class="tool-card-header">
+                        <h3>${tool.name}</h3>
+                    </div>
+                    <div class="tool-card-body">
+                        <div class="description">
+                            <p>${tool.description || 'No description available.'}</p>
+                        </div>
+                        <div class="read-more">Read more</div>
+                        <div class="tags">
+                            ${functionTag}
+                            ${secondaryTags}
+                        </div>
+                    </div>
+                    <div class="tool-card-footer">
+                        <div>
+                            <span><strong>Cost:</strong> ${tool.costType || 'Not specified'}</span>
+                        </div>
+                        <a href="${tool.url}" target="_blank" class="btn">Visit Site</a>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            // Set up read more functionality
+            document.querySelectorAll('.read-more').forEach(button => {
+                button.addEventListener('click', function() {
+                    const description = this.previousElementSibling;
+                    description.classList.toggle('expanded');
+                    this.textContent = description.classList.contains('expanded') ? 'Read less' : 'Read more';
+                });
+            });
+        }
+        
+        // Function to filter tools based on user selection
+        function filterTools() {
+            const functionFilter = document.getElementById('function-filter').value;
+            const stageFilter = document.getElementById('stage-filter').value;
+            const costFilter = document.getElementById('cost-filter').value;
+            const searchText = document.getElementById('search').value.toLowerCase();
+            
+            const filteredTools = toolsData.filter(tool => {
+                // Function filter
+                const functionMatch = !functionFilter || 
+                    (tool.primaryFunction && tool.primaryFunction === functionFilter) ||
+                    (tool.secondaryFunctions && tool.secondaryFunctions.includes(functionFilter));
+                
+                // Stage filter
+                const stageMatch = !stageFilter || 
+                    (tool.publishingStage && tool.publishingStage.includes(stageFilter));
+                
+                // Cost filter
+                const costMatch = !costFilter || 
+                    (tool.costType && tool.costType === costFilter);
+                
+                // Search text
+                const searchMatch = !searchText || 
+                    tool.name.toLowerCase().includes(searchText) || 
+                    (tool.description && tool.description.toLowerCase().includes(searchText));
+                
+                return functionMatch && stageMatch && costMatch && searchMatch;
+            });
+            
+            renderTools(filteredTools);
+        }
+        
+        // Function to set up event listeners
+        function setupEventListeners() {
+            document.getElementById('function-filter').addEventListener('change', filterTools);
+            document.getElementById('stage-filter').addEventListener('change', filterTools);
+            document.getElementById('cost-filter').addEventListener('change', filterTools);
+            document.getElementById('search').addEventListener('input', filterTools);
+        }
+        
+        // Initialize the app when the page loads
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
